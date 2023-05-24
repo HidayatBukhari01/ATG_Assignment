@@ -5,18 +5,17 @@ class Card1 extends StatelessWidget {
   final String category;
   final String title;
   final int lessons;
-  final String image;
   const Card1({
     super.key,
     required this.category,
     required this.title,
     required this.lessons,
-    required this.image,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: const EdgeInsets.only(right: 16),
       height: 280,
       width: 247,
       decoration: BoxDecoration(
@@ -34,7 +33,7 @@ class Card1 extends StatelessWidget {
                 color: Color(0xffDDE3C2)),
             child: Center(
               child: Image.asset(
-                'images/$image',
+                'images/g10.png',
                 fit: BoxFit.cover,
               ),
             ),
@@ -59,6 +58,7 @@ class Card1 extends StatelessWidget {
                 ),
                 Text(
                   title,
+                  maxLines: 2,
                   style: GoogleFonts.inter(
                       fontSize: 17,
                       fontWeight: FontWeight.w700,
