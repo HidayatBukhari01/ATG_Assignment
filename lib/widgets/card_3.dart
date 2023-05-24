@@ -5,21 +5,20 @@ class Card3 extends StatelessWidget {
   final String category;
   final String title;
   final int length;
-  final String image;
-  final String icon;
+  final bool isLocked;
   const Card3({
     super.key,
     required this.category,
     required this.title,
     required this.length,
-    required this.image,
-    required this.icon,
+    required this.isLocked,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 280,
+      margin: const EdgeInsets.only(right: 16),
+      height: 282,
       width: 247,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
@@ -36,7 +35,7 @@ class Card3 extends StatelessWidget {
                 color: Color(0xffDDE3C2)),
             child: Center(
               child: Image.asset(
-                'images/$image',
+                'images/g11.png',
                 fit: BoxFit.cover,
               ),
             ),
@@ -61,13 +60,16 @@ class Card3 extends StatelessWidget {
                 ),
                 Text(
                   title,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                   style: GoogleFonts.inter(
                       fontSize: 17,
                       fontWeight: FontWeight.w700,
                       color: const Color(0xff000000)),
                 ),
-                const SizedBox(
-                  height: 15,
+                SizedBox(
+                  height:
+                      title.length >= 22 ? (title.length == 22 ? 39 : 15) : 39,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -79,7 +81,9 @@ class Card3 extends StatelessWidget {
                           fontWeight: FontWeight.w500,
                           color: const Color(0xff6D747A)),
                     ),
-                    Image.asset("images/icons/$icon"),
+                    isLocked
+                        ? Image.asset("images/icon/lock.png")
+                        : const Icon(Icons.lock_open),
                   ],
                 ),
               ],

@@ -1,3 +1,6 @@
+import 'package:atg_assginment/models/lesson_model.dart';
+import 'package:atg_assginment/models/program_model.dart';
+import 'package:atg_assginment/services/item_service.dart';
 import 'package:atg_assginment/widgets/card_2.dart';
 import 'package:atg_assginment/widgets/nav_button.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +15,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ItemService itemService = ItemService();
     return Scaffold(
       backgroundColor: const Color(0xffF5F5F5),
       appBar: AppBar(
@@ -140,27 +144,28 @@ class HomeScreen extends StatelessWidget {
                 const SizedBox(
                   height: 24,
                 ),
-                const SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: [
-                      Card1(
-                        category: "LIFESTYLE",
-                        title: "A complete guide for your new born baby",
-                        lessons: 16,
-                        image: 'g10.png',
-                      ),
-                      SizedBox(
-                        width: 16,
-                      ),
-                      Card1(
-                        category: "WORKING PARENTS",
-                        title: "Understanding of human behaviour",
-                        lessons: 16,
-                        image: 'g10.png',
-                      ),
-                    ],
-                  ),
+                //Implement the Programs API endpoint provided in the assignment here.
+                SizedBox(
+                  height: 280,
+                  child: FutureBuilder<ProgramModel>(
+                      future: itemService.programsList(),
+                      builder: (context, snapshot) {
+                        if (!snapshot.hasData) {
+                          return const Text("No Data");
+                        } else {
+                          return ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: snapshot.data!.items.length,
+                              itemBuilder: (context, index) {
+                                return Card1(
+                                    category:
+                                        snapshot.data!.items[index].category,
+                                    title: snapshot.data!.items[index].name,
+                                    lessons:
+                                        snapshot.data!.items[index].lesson);
+                              });
+                        }
+                      }),
                 ),
                 const SizedBox(
                   height: 32,
@@ -258,36 +263,37 @@ class HomeScreen extends StatelessWidget {
                 const SizedBox(
                   height: 24,
                 ),
-                const SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: [
-                      Card3(
-                        category: "BABYCARE",
-                        title: "Understanding of human behaviour",
-                        length: 3,
-                        image: 'g11.png',
-                        icon: "lock.png",
-                      ),
-                      SizedBox(
-                        width: 16,
-                      ),
-                      Card3(
-                        category: "BABYCARE",
-                        title: "Understanding of human behaviour",
-                        length: 3,
-                        image: 'g11.png',
-                        icon: "lock.png",
-                      ),
-                    ],
-                  ),
+                //Implement the lessons API endpoint provided in the assignment here.
+                SizedBox(
+                  height: 282,
+                  child: FutureBuilder<LessonModel>(
+                      future: itemService.lessonsList(),
+                      builder: (context, snapshot) {
+                        if (!snapshot.hasData) {
+                          return const Text("No data");
+                        } else {
+                          return ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: snapshot.data!.items.length,
+                              itemBuilder: (context, index) {
+                                return Card3(
+                                    category:
+                                        snapshot.data!.items[index].category,
+                                    title: snapshot.data!.items[index].name,
+                                    length:
+                                        snapshot.data!.items[index].duration,
+                                    isLocked:
+                                        snapshot.data!.items[index].locked);
+                              });
+                        }
+                      }),
                 ),
                 const SizedBox(
                   height: 24,
                 ),
               ],
             ),
-          )
+          ),
         ],
       )),
       bottomNavigationBar: const BottomNav(),
