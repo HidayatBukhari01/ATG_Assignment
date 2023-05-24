@@ -1,6 +1,8 @@
 # atg_assginment
 
-A new Flutter project.
+ATG Assignment.
+APIs successfully deployed to "Programs" and "Lessons" section.
+Web APP for the same deployed as well, link here - https://atg-assignment-c2226.web.app/
 
 ## Getting Started
 
